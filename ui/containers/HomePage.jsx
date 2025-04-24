@@ -1,17 +1,73 @@
-import HomePageButtons from "../components/HomePageButtons";
+import Button from "../components/Buttons";
 import InputField from "../components/InputField";
-import InputFieldPassword from "../components/InputFieldPassword";
 import Logo from "../components/Logo";
 import { useState } from "react";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { InputAdornment, IconButton, Typography } from "@mui/material";
+import axios from "axios";
 
-import { Box } from "@mui/material";
+import { Box, Input } from "@mui/material";
 
 const HomePage = () => {
   const [signUp, setSignUp] = useState(false);
   const [accountVerified, setAccountVerified] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailValue, setEmailValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
+  const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
+  const [signUpCredentialsOkay, setSignUpCredentialsOkay] = useState(null);
+  const [userCreatedSuccessful, setUserCreatedSuccessful] = useState(null);
 
-  let emailValue = "";
-  let passwordValue = "";
+  const signUpCredentialsCheck = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validEmail = emailRegex.test(emailValue);
+    if (validEmail && passwordValue === passwordConfirmValue) {
+      setSignUpCredentialsOkay(true);
+      createNewUser(emailValue, passwordValue);
+    } else {
+      setSignUpCredentialsOkay(false);
+    }
+  };
+
+  const createNewUser = (userEmail, userPassword) => {
+    const userObject = { email: userEmail, password: userPassword };
+    axios
+      .post("http://localhost:3000/users", userObject)
+      .then((response) => {
+        console.log("users array", response.data);
+        console.log(response.status);
+        if (response.status === 201) {
+          resetValues();
+          setUserCreatedSuccessful(true);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const resetValues = () => {
+    setEmailValue("");
+    setPasswordValue("");
+    setPasswordConfirmValue("");
+  };
+
+  const verifyAccountForLogIn = () => {
+    axios
+      .get("http://localhost:3000/users")
+      .then((response) => {
+        const data = response.data;
+        const exists = data.some(
+          (users) =>
+            users.email === emailValue && users.password === passwordValue
+        );
+        if (exists) {
+          setSignUpCredentialsOkay(true);
+        } else {
+          setSignUpCredentialsOkay(false);
+        }
+      })
+      .catch((error) => console.log("error", error));
+  };
 
   return (
     <div
@@ -56,20 +112,128 @@ const HomePage = () => {
             width: "300px",
           }}
         >
-          <InputField
-            label="Email"
-            type="email"
-            onChange={(e) => (emailValue = e.target.value)}
-          />
-          <InputFieldPassword label={"Password"} />
-          {signUp ? <InputFieldPassword label={"Re-type Password"} /> : ""}
+          <Typography
+            style={{
+              display: userCreatedSuccessful === true ? "flex" : "none",
+              margin: "auto",
+              color: "Green",
+              fontWeight: "bold",
+            }}
+          >
+            User Created Successfully
+          </Typography>
+          <Typography
+            style={{
+              display: signUpCredentialsOkay === false ? "flex" : "none",
+              margin: "auto",
+              color: "red",
+            }}
+          >
+            Email or Password invalid
+          </Typography>
+          {userCreatedSuccessful !== true && (
+            <>
+              <InputField
+                label="Email"
+                type="email"
+                value={emailValue}
+                onChange={(e) => setEmailValue(e.target.value)}
+              />
+              <InputField
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                value={passwordValue}
+                onChange={(e) => setPasswordValue(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {signUp ? (
+                <InputField
+                  label={"Re-type Password"}
+                  type={showPassword ? "text" : "password"}
+                  value={passwordConfirmValue}
+                  onChange={(e) => setPasswordConfirmValue(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                          {showPassword ? (
+                            <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </>
+          )}
         </div>
-        <HomePageButtons
-          accountVerified={accountVerified}
-          setAccountVerified={setAccountVerified}
-          signUp={signUp}
-          setSignUp={setSignUp}
-        />
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+            width: "300px",
+          }}
+        >
+          <Button
+            onClick={verifyAccountForLogIn}
+            display={signUp ? "none" : "flex"}
+            variant={"contained"}
+            content={"Log In"}
+          />
+
+          <Button
+            color="whitesmoke"
+            backgroundColor=""
+            variant={"contained"}
+            content={"Sign Up"}
+            onClick={() => setSignUp(true)}
+            display={signUp ? "none" : "flex"}
+          />
+          {userCreatedSuccessful !== true && (
+            <Button
+              onClick={signUpCredentialsCheck}
+              color="whitesmoke"
+              backgroundColor=""
+              variant={"contained"}
+              content={"Sign Up"}
+              display={signUp ? "flex" : "none"}
+            />
+          )}
+
+          <Button
+            onClick={() => {
+              setSignUp(false);
+              setUserCreatedSuccessful(null);
+              resetValues();
+            }}
+            display={signUp ? "flex" : "none"}
+            variant={"contained"}
+            content={"Back to Log In"}
+          />
+        </Box>
       </div>
     </div>
   );

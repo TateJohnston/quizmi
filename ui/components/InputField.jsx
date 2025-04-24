@@ -1,10 +1,20 @@
 import { TextField } from "@mui/material";
 
-const InputField = ({ endAdornment, onChange, label, variant, type }) => {
+const InputField = ({
+  value,
+  onChange,
+  label,
+  variant,
+  type,
+  InputProps,
+  display,
+}) => {
   return (
     <TextField
+      value={value}
       onChange={onChange}
       style={{
+        display: { display },
         width: "300px",
         backgroundColor: "whitesmoke",
         borderRadius: "4px",
@@ -12,6 +22,7 @@ const InputField = ({ endAdornment, onChange, label, variant, type }) => {
       label={label}
       variant={variant}
       type={type}
+      InputProps={InputProps}
     ></TextField>
   );
 };
