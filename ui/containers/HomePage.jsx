@@ -64,6 +64,7 @@ const HomePage = () => {
           setSignUpCredentialsOkay(true);
         } else {
           setSignUpCredentialsOkay(false);
+          console;
         }
       })
       .catch((error) => console.log("error", error));
@@ -134,12 +135,14 @@ const HomePage = () => {
           {userCreatedSuccessful !== true && (
             <>
               <InputField
+                width={"300px"}
                 label="Email"
                 type="email"
                 value={emailValue}
                 onChange={(e) => setEmailValue(e.target.value)}
               />
               <InputField
+                width={"300px"}
                 label="Password"
                 type={showPassword ? "text" : "password"}
                 value={passwordValue}
@@ -163,6 +166,7 @@ const HomePage = () => {
 
               {signUp ? (
                 <InputField
+                  width={"300px"}
                   label={"Re-type Password"}
                   type={showPassword ? "text" : "password"}
                   value={passwordConfirmValue}
