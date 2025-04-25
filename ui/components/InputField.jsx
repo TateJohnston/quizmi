@@ -8,14 +8,15 @@ const InputField = ({
   type,
   InputProps,
   display,
+  width,
 }) => {
   return (
     <TextField
       value={value}
       onChange={onChange}
       style={{
-        display: { display },
-        width: "300px",
+        display: display,
+        width: width,
         backgroundColor: "whitesmoke",
         borderRadius: "4px",
       }}
