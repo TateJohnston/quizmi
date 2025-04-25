@@ -4,10 +4,13 @@ import { Avatar, Tooltip, Typography } from "@mui/material";
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRef } from "react";
+import { UserContext } from "../context/UserContext";
+import { useContext } from "react";
 
 const Navbar = () => {
   const [avatarPicture, setAvatarPicture] = useState("");
   const fileInputRef = useRef(null);
+  const { userDetails } = useContext(UserContext);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -56,7 +59,7 @@ const Navbar = () => {
               bgcolor: avatarPicture ? "white" : "rgb(133, 176, 210)",
               border: "1px solid darkgray ",
             }}
-            alt=""
+            alt={userDetails.name}
             src={avatarPicture}
           />
           <Tooltip type="file" title="Edit Picture">
@@ -87,7 +90,7 @@ const Navbar = () => {
             onChange={handleFileChange}
           />
         </div>
-        <Typography>Mo Salah</Typography>
+        <Typography>{userDetails.name}</Typography>
       </div>
     </div>
   );

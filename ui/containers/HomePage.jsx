@@ -6,37 +6,47 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { InputAdornment, IconButton, Typography } from "@mui/material";
 import axios from "axios";
+import { PageContext, PageProvider } from "../context/PageContext";
+import { useContext } from "react";
 
 import { Box, Input } from "@mui/material";
+import { UserContext } from "../context/UserContext";
 
 const HomePage = () => {
   const [signUp, setSignUp] = useState(false);
   const [accountVerified, setAccountVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordConfirmValue, setPasswordConfirmValue] = useState("");
   const [signUpCredentialsOkay, setSignUpCredentialsOkay] = useState(null);
   const [userCreatedSuccessful, setUserCreatedSuccessful] = useState(null);
 
+  const { logIn } = useContext(PageContext);
+  const { setUserDetails } = useContext(UserContext);
+
   const signUpCredentialsCheck = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validEmail = emailRegex.test(emailValue);
-    if (validEmail && passwordValue === passwordConfirmValue) {
+    if (nameValue && validEmail && passwordValue === passwordConfirmValue) {
       setSignUpCredentialsOkay(true);
-      createNewUser(emailValue, passwordValue);
+      createNewUser(nameValue, emailValue, passwordValue);
     } else {
       setSignUpCredentialsOkay(false);
     }
   };
 
-  const createNewUser = (userEmail, userPassword) => {
-    const userObject = { email: userEmail, password: userPassword };
+  const createNewUser = (userName, userEmail, userPassword) => {
+    const userObject = {
+      name: userName,
+      email: userEmail,
+      password: userPassword,
+      id: "",
+    };
     axios
       .post("http://localhost:3000/users", userObject)
       .then((response) => {
-        console.log("users array", response.data);
-        console.log(response.status);
         if (response.status === 201) {
           resetValues();
           setUserCreatedSuccessful(true);
@@ -53,18 +63,20 @@ const HomePage = () => {
 
   const verifyAccountForLogIn = () => {
     axios
-      .get("http://localhost:3000/users")
+      .get(`http://localhost:3000/users/?${emailValue}`)
       .then((response) => {
         const data = response.data;
-        const exists = data.some(
+
+        const matchedUser = data.find(
           (users) =>
             users.email === emailValue && users.password === passwordValue
         );
-        if (exists) {
+        if (matchedUser) {
           setSignUpCredentialsOkay(true);
+          logIn();
+          setUserDetails(matchedUser);
         } else {
           setSignUpCredentialsOkay(false);
-          console;
         }
       })
       .catch((error) => console.log("error", error));
@@ -134,6 +146,17 @@ const HomePage = () => {
           </Typography>
           {userCreatedSuccessful !== true && (
             <>
+              {signUp ? (
+                <InputField
+                  width={"300px"}
+                  label={"Name"}
+                  type={"text"}
+                  value={nameValue}
+                  onChange={(e) => setNameValue(e.target.value)}
+                />
+              ) : (
+                ""
+              )}
               <InputField
                 width={"300px"}
                 label="Email"
