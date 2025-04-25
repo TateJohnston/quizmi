@@ -9,15 +9,20 @@ const InputField = ({
   InputProps,
   display,
   width,
+  backgroundColor = "whitesmoke",
+  marginTop,
+  helperText,
 }) => {
   return (
     <TextField
+      helperText={helperText}
       value={value}
       onChange={onChange}
       style={{
         display: display,
         width: width,
-        backgroundColor: "whitesmoke",
+        backgroundColor: backgroundColor,
+        marginTop: marginTop,
         borderRadius: "4px",
       }}
       label={label}

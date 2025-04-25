@@ -8,6 +8,8 @@ const Buttons = ({
   content,
   backgroundColor = "whitesmoke",
   color = "rgb(133, 176, 210)",
+  width,
+  marginTop,
 }) => {
   return (
     <Button
@@ -18,6 +20,8 @@ const Buttons = ({
         color: { color },
         fontWeight: "bold",
         display: { display },
+        width: { width },
+        marginTop: { marginTop },
       }}
     >
       {content}
