@@ -39,6 +39,7 @@ export const SubjectProvider = ({ children }) => {
   return (
     <SubjectContext.Provider
       value={{
+        setSelectedSubjectName,
         selectedSubjectName,
         selectedSubjectQuizzes,
         getSubjectsQuizzes,
