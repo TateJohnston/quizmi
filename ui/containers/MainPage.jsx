@@ -4,10 +4,14 @@ import Navbar from "../components/NavBar";
 import { QuizContext } from "../context/QuizContext";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import AddQuizColumn from "../components/AddQuizColumn";
+import { SubjectContext } from "../context/SubjectContext";
+import CreateQuiz from "../components/CreateQuiz";
+import Quiz from "../components/Quiz";
+import Results from "../components/Results";
 
 const MainPage = () => {
-  const { quizList, setQuizList, fetchQuizzes } = useContext(QuizContext);
-  const { userDetails } = useContext(UserContext);
+  const { fetchQuizzes } = useContext(QuizContext);
 
   useEffect(() => {
     fetchQuizzes();
@@ -18,14 +22,20 @@ const MainPage = () => {
       <div style={{ marginTop: "0px" }}>
         <Navbar />
       </div>
-      <div
-        style={{
-          display: "flex",
-          width: "25%",
-          flexDirection: "row",
-        }}
-      >
-        <AddSubjectColumn />
+      <div style={{ display: "flex" }}>
+        <div
+          style={{
+            display: "flex",
+            width: "25%",
+            flexDirection: "row",
+          }}
+        >
+          <AddSubjectColumn />
+          <AddQuizColumn />
+        </div>
+        <CreateQuiz />
+        <Quiz />
+        <Results />
       </div>
     </div>
   );

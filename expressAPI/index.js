@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const users = require("./models/users");
-const quizzes = require("./models/quizzes");
 const port = 3000;
 const app = express();
 
@@ -26,7 +25,7 @@ app.get("/users/:email", (req, res) => {
         .json({ result: `User with email ${userEmail} not found` });
 });
 
-app.post("/quizzes/:id", (req, res) => {
+app.post("/subject/:id", (req, res) => {
   let userId = Number(req.params.id);
   let user = users.find((user) => user.id === userId);
   if (user) {
@@ -34,13 +33,99 @@ app.post("/quizzes/:id", (req, res) => {
       user.quizzes = [];
     }
     user.quizzes.push(req.body);
-    res.status(201).json({ result: "Subject added successfully" });
+    res.status(201).json({
+      result: `${req.body.subject} added successfully`,
+    });
   } else {
     res.status(404).json({ result: "User not found" });
   }
 });
-app.get("/quizzes", (req, res) => {
-  res.status(200).json(quizzes);
+
+app.post("/quizName/:id", (req, res) => {
+  let userId = Number(req.params.id);
+  let user = users.find((user) => user.id === userId);
+  let subject = req.body.subject;
+  let quizzes = user.quizzes;
+
+  if (user) {
+    let found = false;
+    for (let quizType of quizzes) {
+      if (quizType.subject === subject) {
+        quizType.quiz.push(req.body.quiz);
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      quizzes.push({
+        subject: subject,
+        quiz: [req.body.quiz],
+      });
+    }
+
+    res.status(201).json({
+      result: `Quiz Name: ${req.body.quiz.quizName} added to Subject: ${subject} Successfully.`,
+      UpdatedUser: user,
+    });
+  } else {
+    res.status(404).json({ result: "User not found" });
+  }
+});
+
+app.post("/quiz/:id/:subjectName/:quizName", (req, res) => {
+  let userId = Number(req.params.id);
+  let user = users.find((user) => user.id === userId);
+
+  if (user) {
+    let quizzes = user.quizzes;
+    let quizSubject = req.params.subjectName;
+    let quizName = req.params.quizName;
+    let quizQuestions = req.body.questions;
+    let quizAnswers = req.body.answers;
+
+    for (let quizType of quizzes) {
+      if (quizType.subject === quizSubject) {
+        for (let quiz of quizType.quiz)
+          if (quiz.quizName === quizName) {
+            quiz.questions.push(...quizQuestions);
+            quiz.answers.push(...quizAnswers);
+            break;
+          }
+      }
+    }
+    res
+      .status(201)
+      .json({ result: `Quiz updated successfully`, UpdatedUser: user });
+  } else {
+    res.status(404).json({ result: "User not found" });
+  }
+});
+
+app.get("/quiz/:id/:subjectName/:quizName", (req, res) => {
+  let userId = Number(req.params.id);
+  let user = users.find((user) => user.id === userId);
+
+  if (user) {
+    let quizzes = user.quizzes;
+    let quizSubject = req.params.subjectName;
+    let quizName = req.params.quizName;
+
+    for (let quizType of quizzes) {
+      if (quizType.subject === quizSubject) {
+        for (let quiz of quizType.quiz)
+          if (quiz.quizName === quizName) {
+            res.status(200).json(quiz);
+            break;
+          }
+      }
+    }
+    res
+      .status(201)
+      .json({ result: `Quiz updated successfully`, UpdatedUser: user });
+  } else {
+    res.status(404).json({ result: "User not found" });
+  }
 });
 
 app.listen(port, () => {

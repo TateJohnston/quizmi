@@ -7,7 +7,7 @@ const users = [
     quizzes: [
       {
         subject: "mathematics",
-        quizzes: [
+        quiz: [
           {
             quizName: "Addition",
             questions: ["2 + 2", "1+1", "10 + 2", "30 + 3"],
@@ -22,7 +22,7 @@ const users = [
       },
       {
         subject: "geography",
-        quizzes: [
+        quiz: [
           {
             quizName: "capitals",
             questions: [
@@ -53,7 +53,7 @@ const users = [
     quizzes: [
       {
         subject: "Testing Quiz1",
-        quizzes: [
+        quiz: [
           {
             quizName: "test1",
             questions: ["2 + 2", "1+1", "10 + 2", "30 + 3"],
@@ -68,7 +68,7 @@ const users = [
       },
       {
         subject: "TestingQuiz2",
-        quizzes: [
+        quiz: [
           {
             quizName: "test3",
             questions: [
