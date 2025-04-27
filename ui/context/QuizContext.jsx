@@ -12,8 +12,10 @@ export const QuizProvider = ({ children }) => {
     axios
       .get(`http://localhost:3000/users/${userDetails.email}`)
       .then((response) => {
-        const quizzes = response.data.quizzes;
-        setQuizList(quizzes);
+        if (response.data.quizzes) {
+          const quizzes = response.data.quizzes;
+          setQuizList(quizzes);
+        }
       })
       .catch((error) => console.log("error", error));
   };

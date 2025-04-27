@@ -12,9 +12,16 @@ const InputField = ({
   backgroundColor = "whitesmoke",
   marginTop,
   helperText,
+  rows,
+  multiline,
+  maxRows,
 }) => {
   return (
     <TextField
+      {...(multiline && { multiline })}
+      {...(rows && { rows })}
+      {...(maxRows && { maxRows })}
+      rows={rows}
       helperText={helperText}
       value={value}
       onChange={onChange}

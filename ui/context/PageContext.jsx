@@ -7,6 +7,9 @@ export const PageProvider = ({ children }) => {
   const logIn = () => {
     setPage(2);
   };
+  const signOut = () => {
+    setPage(1);
+  };
   return (
     <PageContext.Provider value={{ page, setPage, logIn }}>
       {children}

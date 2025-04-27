@@ -75,6 +75,7 @@ const HomePage = () => {
           setSignUpCredentialsOkay(true);
           logIn();
           setUserDetails(matchedUser);
+          console.log("Logged in User", matchedUser);
         } else {
           setSignUpCredentialsOkay(false);
         }
@@ -87,7 +88,6 @@ const HomePage = () => {
       style={{
         display: "flex",
         flexDirection: "row",
-        backgroundColor: "beige",
         height: "100vh",
         width: "100vw",
       }}
@@ -96,7 +96,7 @@ const HomePage = () => {
         style={{
           height: "100%",
           width: "50%",
-          backgroundColor: "whitesmoke",
+          backgroundColor: "white",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
