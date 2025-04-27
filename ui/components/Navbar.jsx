@@ -6,11 +6,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useRef } from "react";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
+import { QuizContext } from "../context/QuizContext";
+import { InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 const Navbar = () => {
   const [avatarPicture, setAvatarPicture] = useState("");
   const fileInputRef = useRef(null);
   const { userDetails } = useContext(UserContext);
+  const { quizList } = useContext(QuizContext);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -19,10 +25,20 @@ const Navbar = () => {
       setAvatarPicture(imageUrl);
     }
   };
-
   const handleEditClick = () => {
     fileInputRef.current.click();
   };
+
+  // const searchQuizzes = (input) => {
+  //   console.log(quizList);
+
+  // };
+  let allQuizzes = [];
+  for (let subject of quizList) {
+    for (let quiz of subject.quiz) {
+      allQuizzes.push(quiz);
+    }
+  }
 
   return (
     <div
@@ -37,12 +53,15 @@ const Navbar = () => {
       }}
     >
       <Logo style={{ height: "200px" }} />
-      <InputField
-        style={{ color: "rgb(133, 176, 210,0.8)" }}
-        type="text"
-        label="Search..."
-        width="40%"
+      <Autocomplete
+        disablePortal
+        options={allQuizzes.map((quiz) => quiz.quizName)}
+        sx={{ width: "40%" }}
+        renderInput={(params) => (
+          <TextField {...params} label="Search Quizzes..." />
+        )}
       />
+
       <div
         style={{
           display: "flex",
