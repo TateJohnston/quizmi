@@ -11,12 +11,18 @@ import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { CurrentQuizContext } from "../context/CurrentQuiz";
+import { SubjectContext } from "../context/SubjectContext";
 
 const Navbar = () => {
   const [avatarPicture, setAvatarPicture] = useState("");
   const fileInputRef = useRef(null);
   const { userDetails } = useContext(UserContext);
   const { quizList } = useContext(QuizContext);
+  const { currentQuizName, setCurrentQuizName } =
+    useContext(CurrentQuizContext);
+  const { selectedSubjectName, setSelectedSubjectName } =
+    useContext(SubjectContext);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,12 +35,10 @@ const Navbar = () => {
     fileInputRef.current.click();
   };
 
-  // const searchQuizzes = (input) => {
-  //   console.log(quizList);
-
-  // };
   let allQuizzes = [];
+  let allSubjects = [];
   for (let subject of quizList) {
+    allSubjects.push(subject);
     for (let quiz of subject.quiz) {
       allQuizzes.push(quiz);
     }
@@ -54,6 +58,19 @@ const Navbar = () => {
     >
       <Logo style={{ height: "200px" }} />
       <Autocomplete
+        value={currentQuizName}
+        onChange={(e, value) => {
+          setCurrentQuizName(value);
+          for (let quizzes of allSubjects) {
+            let quiz = quizzes.quiz;
+            for (let singleQuiz of quiz) {
+              if (singleQuiz.quizName === value) {
+                setSelectedSubjectName(quizzes.subject);
+                console.log(selectedSubjectName);
+              }
+            }
+          }
+        }}
         disablePortal
         options={allQuizzes.map((quiz) => quiz.quizName)}
         sx={{ width: "40%" }}
