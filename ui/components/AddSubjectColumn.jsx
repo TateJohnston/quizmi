@@ -13,13 +13,13 @@ import axios from "axios";
 import { useContext } from "react";
 import Buttons from "./Buttons";
 import { UserContext } from "../context/UserContext";
-import { SubjectContext } from "../context/SubjectContext";
+import { CombinedContext } from "../context/CombinedContext";
 
 const AddSubjectColumn = () => {
   const [subjectText, setSubjectText] = useState("");
   const { quizList, setQuizList, fetchQuizzes } = useContext(QuizContext);
   const { userDetails } = useContext(UserContext);
-  const { getSubjectsQuizzes } = useContext(SubjectContext);
+  const { getSubjectsQuizzes } = useContext(CombinedContext);
   const [clickedButton, setClickedButton] = useState(null);
 
   const addSubject = () => {

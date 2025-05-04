@@ -13,17 +13,16 @@ import axios from "axios";
 import { useContext, useEffect } from "react";
 import Buttons from "./Buttons";
 import { UserContext } from "../context/UserContext";
-import { SubjectContext } from "../context/SubjectContext";
-import { CurrentQuizContext } from "../context/CurrentQuiz";
+import { CombinedContext } from "../context/CombinedContext";
 
 const AddQuizColumn = () => {
   const [quizNameText, setQuizNameText] = useState("");
   const { quizList, setQuizList, fetchQuizzes } = useContext(QuizContext);
   const { userDetails } = useContext(UserContext);
   const { selectedSubjectName, selectedSubjectQuizzes } =
-    useContext(SubjectContext);
+    useContext(CombinedContext);
   const [clickedButton, setClickedButton] = useState(null);
-  const { setCurrentQuizName, getCurrentQuiz } = useContext(CurrentQuizContext);
+  const { setCurrentQuizName, getCurrentQuiz } = useContext(CombinedContext);
 
   useEffect(() => {}, [selectedSubjectQuizzes.length]);
 
@@ -81,6 +80,7 @@ const AddQuizColumn = () => {
               onClick={() => {
                 setCurrentQuizName(subject.quizName);
                 setClickedButton(subject.quizName);
+                getCurrentQuiz();
               }}
               width={"100%"}
               backgroundColor={

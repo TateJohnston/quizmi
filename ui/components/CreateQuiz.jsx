@@ -2,8 +2,7 @@ import { Paper, Typography, Box } from "@mui/material";
 import InputField from "./InputField";
 import Buttons from "./Buttons";
 import { useContext, useState, useEffect } from "react";
-import { SubjectContext } from "../context/SubjectContext";
-import { CurrentQuizContext } from "../context/CurrentQuiz";
+import { CombinedContext } from "../context/CombinedContext";
 
 const CreateQuiz = () => {
   const [question, setQuestion] = useState("");
@@ -11,9 +10,10 @@ const CreateQuiz = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const { selectedSubjectName, selectedSubjectQuizzes } =
-    useContext(SubjectContext);
+    useContext(CombinedContext);
   const { currentQuizName, postCurrentQuiz, hasQuizzes } =
-    useContext(CurrentQuizContext);
+    useContext(CombinedContext);
+  const { showQuizMakerCard } = useContext(CombinedContext);
 
   useEffect(() => {
     console.log("Questions: ", questions);
@@ -30,7 +30,7 @@ const CreateQuiz = () => {
     setQuestion("");
   };
 
-  return !hasQuizzes && currentQuizName ? (
+  return !hasQuizzes && currentQuizName && showQuizMakerCard ? (
     <div
       style={{
         width: "600px",
@@ -75,6 +75,8 @@ const CreateQuiz = () => {
       <Buttons
         onClick={() => {
           postCurrentQuiz({ questions, answers });
+          setQuestions("");
+          setAnswers("");
         }}
         color="whitesmoke"
         backgroundColor="none"

@@ -5,7 +5,8 @@ import { QuizContext } from "../context/QuizContext";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import AddQuizColumn from "../components/AddQuizColumn";
-import { SubjectContext } from "../context/SubjectContext";
+import { CombinedContext } from "../context/CombinedContext";
+
 import CreateQuiz from "../components/CreateQuiz";
 import Quiz from "../components/Quiz";
 import Results from "../components/Results";

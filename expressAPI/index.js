@@ -116,13 +116,10 @@ app.get("/quiz/:id/:subjectName/:quizName", (req, res) => {
         for (let quiz of quizType.quiz)
           if (quiz.quizName === quizName) {
             res.status(200).json(quiz);
-            break;
           }
       }
     }
-    res
-      .status(201)
-      .json({ result: `Quiz updated successfully`, UpdatedUser: user });
+    return res.status(404).json({ result: "Quiz not found" });
   } else {
     res.status(404).json({ result: "User not found" });
   }
