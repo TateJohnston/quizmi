@@ -11,18 +11,16 @@ import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { CurrentQuizContext } from "../context/CurrentQuiz";
-import { SubjectContext } from "../context/SubjectContext";
+import { CombinedContext } from "../context/CombinedContext";
 
 const Navbar = () => {
   const [avatarPicture, setAvatarPicture] = useState("");
   const fileInputRef = useRef(null);
   const { userDetails } = useContext(UserContext);
   const { quizList } = useContext(QuizContext);
-  const { currentQuizName, setCurrentQuizName } =
-    useContext(CurrentQuizContext);
+  const { currentQuizName, setCurrentQuizName } = useContext(CombinedContext);
   const { selectedSubjectName, setSelectedSubjectName } =
-    useContext(SubjectContext);
+    useContext(CombinedContext);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];

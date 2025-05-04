@@ -5,9 +5,9 @@ import { QuizProvider } from "../context/QuizContext";
 import { UserProvider } from "../context/UserContext";
 import { PageContext, PageProvider } from "../context/PageContext";
 import { useContext } from "react";
-import { SubjectProvider } from "../context/SubjectContext";
-import { CurrentQuizProvider } from "../context/CurrentQuiz";
+
 import { ResultsContextProvider } from "../context/ResultsContext";
+import { CombinedProvider } from "../context/CombinedContext";
 
 function App() {
   const Pages = () => {
@@ -22,15 +22,13 @@ function App() {
   return (
     <UserProvider>
       <QuizProvider>
-        <SubjectProvider>
-          <CurrentQuizProvider>
-            <ResultsContextProvider>
-              <PageProvider>
-                <Pages />
-              </PageProvider>
-            </ResultsContextProvider>
-          </CurrentQuizProvider>
-        </SubjectProvider>
+        <CombinedProvider>
+          <ResultsContextProvider>
+            <PageProvider>
+              <Pages />
+            </PageProvider>
+          </ResultsContextProvider>
+        </CombinedProvider>
       </QuizProvider>
     </UserProvider>
   );

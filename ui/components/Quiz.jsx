@@ -1,18 +1,19 @@
 import { Button, Typography } from "@mui/material";
 import InputField from "./InputField";
 import Buttons from "./Buttons";
-import { CurrentQuizContext } from "../context/CurrentQuiz";
+import { CombinedContext } from "../context/CombinedContext";
+
 import { useContext, useEffect, useState } from "react";
-import { SubjectContext } from "../context/SubjectContext";
+
 import { ResultsContext } from "../context/ResultsContext";
 
 const Quiz = () => {
   const { currentQuizName, quizQuestions, quizAnswers, hasQuizzes } =
-    useContext(CurrentQuizContext);
+    useContext(CombinedContext);
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [index, setIndex] = useState(0);
   const [givenAnswer, setGivenAnswer] = useState("");
-  const { selectedSubjectName } = useContext(SubjectContext);
+  const { selectedSubjectName } = useContext(CombinedContext);
   const { results, setResults, quizDone, setQuizDone } =
     useContext(ResultsContext);
 

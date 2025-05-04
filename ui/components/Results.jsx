@@ -4,12 +4,11 @@ import { Box, Typography } from "@mui/material";
 import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltRounded";
 import ThumbDownAltRoundedIcon from "@mui/icons-material/ThumbDownAltRounded";
 import Buttons from "./Buttons";
-import { CurrentQuizContext } from "../context/CurrentQuiz";
+import { CombinedContext } from "../context/CombinedContext";
 
 const Results = () => {
   const { results, quizDone } = useContext(ResultsContext);
-  const { currentQuizName, setCurrentQuizName } =
-    useContext(CurrentQuizContext);
+  const { currentQuizName, setCurrentQuizName } = useContext(CombinedContext);
 
   return (
     quizDone && (
