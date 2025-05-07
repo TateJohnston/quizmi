@@ -47,12 +47,11 @@ export const CombinedProvider = ({ children }) => {
     }
   }, [quizList]);
 
-  // useEffect(() => {
-  //   if (currentQuizName) {
-  //     getCurrentQuiz();
-  //   }
-  //   console.log("current quiz name", currentQuizName);
-  // }, [currentQuizName]);
+  useEffect(() => {
+    if (currentQuizName) {
+      getCurrentQuiz();
+    }
+  }, [currentQuizName]);
 
   const getCurrentQuiz = () => {
     console.log("current quiz name", currentQuizName);

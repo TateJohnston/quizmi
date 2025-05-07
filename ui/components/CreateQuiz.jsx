@@ -38,6 +38,8 @@ const CreateQuiz = () => {
         backgroundColor: "whitesmoke",
         border: "1px solid rgb(133, 176, 210,0.3)",
         margin: "auto",
+        textAlign: "center",
+        padding: "20px",
       }}
     >
       <div
@@ -46,11 +48,24 @@ const CreateQuiz = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-around",
+          alignItems: "center",
         }}
       >
-        <Typography>{selectedSubjectName}</Typography>
-        <Typography>{currentQuizName}</Typography>
-        <Typography>Question {questions.length + 1}</Typography>
+        <Typography
+          variant="h4"
+          sx={{ textTransform: "uppercase", fontWeight: "bolder" }}
+        >
+          {selectedSubjectName}
+        </Typography>
+        <Typography variant="h5" sx={{ textTransform: "uppercase" }}>
+          {currentQuizName}
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{ textTransform: "capitalise", fontStyle: "italic" }}
+        >
+          Question {questions.length + 1}
+        </Typography>
         <InputField
           onChange={(e) => setQuestion(e.target.value)}
           multiline={true}
