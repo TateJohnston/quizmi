@@ -54,7 +54,6 @@ export const CombinedProvider = ({ children }) => {
   }, [currentQuizName]);
 
   const getCurrentQuiz = () => {
-    console.log("current quiz name", currentQuizName);
     axios
       .get(
         `http://localhost:3000/quiz/${userDetails.id}/${selectedSubjectName}/${currentQuizName}`
@@ -62,7 +61,7 @@ export const CombinedProvider = ({ children }) => {
       .then((response) => {
         if (response.status === 200) {
           const data = response.data;
-          console.log("response data after get ", data);
+
           if (data.questions.length > 0) {
             setQuizQuestions(data.questions);
             setQuizAnswers(data.answers);
@@ -73,7 +72,7 @@ export const CombinedProvider = ({ children }) => {
           }
         }
       })
-      .catch((error) => console.log("error: ", error));
+      .catch((error) => console.error("error: ", error));
   };
 
   const postCurrentQuiz = (quizObject) => {
@@ -85,12 +84,9 @@ export const CombinedProvider = ({ children }) => {
       .then((response) => {
         if (response.status === 201) {
           setShowQuizMakerCard(false);
-          console.log("quiz has been posted");
-        } else {
-          console.log(response.data);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   return (

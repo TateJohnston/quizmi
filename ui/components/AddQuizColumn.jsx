@@ -39,10 +39,9 @@ const AddQuizColumn = () => {
           if (response.status === 201) {
             setQuizNameText("");
             fetchQuizzes();
-            console.log("New Quiz Array", response.data);
           }
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.error("error", error));
     }
   };
 

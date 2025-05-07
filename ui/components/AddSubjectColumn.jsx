@@ -34,7 +34,7 @@ const AddSubjectColumn = () => {
             fetchQuizzes();
           }
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.error("error", error));
     }
   };
 

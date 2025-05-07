@@ -64,7 +64,6 @@ const Navbar = () => {
             for (let singleQuiz of quiz) {
               if (singleQuiz.quizName === value) {
                 setSelectedSubjectName(quizzes.subject);
-                console.log(selectedSubjectName);
               }
             }
           }

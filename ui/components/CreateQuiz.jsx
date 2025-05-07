@@ -15,12 +15,8 @@ const CreateQuiz = () => {
     useContext(CombinedContext);
   const { showQuizMakerCard } = useContext(CombinedContext);
 
-  useEffect(() => {
-    console.log("Questions: ", questions);
-  }, [questions]);
-  useEffect(() => {
-    console.log("Answers: ", answers);
-  }, [answers]);
+  useEffect(() => {}, [questions]);
+  useEffect(() => {}, [answers]);
 
   const storeQuestionAndAnswer = () => {
     setQuestions((prevQuestions) => [...prevQuestions, question]);

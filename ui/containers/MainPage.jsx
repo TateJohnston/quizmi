@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import AddSubjectColumn from "../components/AddSubjectColumn";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import { QuizContext } from "../context/QuizContext";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";

@@ -52,7 +52,7 @@ const HomePage = () => {
           setUserCreatedSuccessful(true);
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.error("error", error));
   };
 
   const resetValues = () => {
@@ -75,12 +75,11 @@ const HomePage = () => {
           setSignUpCredentialsOkay(true);
           logIn();
           setUserDetails(matchedUser);
-          console.log("Logged in User", matchedUser);
         } else {
           setSignUpCredentialsOkay(false);
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.error("error", error));
   };
 
   return (
