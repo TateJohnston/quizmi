@@ -2,20 +2,18 @@
 
 Terminal 1:
 
-npm i
-
 1. cd to expressAPI
-2. npm test for jest backend test
-3. npm start to start the server
-4. click on server link in terminal then go to localhost:3000/quizmi for swagger example
+2. npm i
+3. npm test for jest backend test
+4. npm start to start the server
+5. click on server link in terminal then go to localhost:3000/quizmi for swagger example
 
 Terminal 2:
 
-npm i
-
 1. cd to ui
-2. npm start
-3. click on vite link for the project
+2. npm i
+3. npm start
+4. click on vite link for the project
 
 ON THE WEBSITE:
 
