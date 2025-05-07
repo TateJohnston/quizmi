@@ -61,7 +61,7 @@ const Quiz = () => {
         <Typography
           fontWeight={"bold"}
           textTransform={"uppercase"}
-          variant="h2"
+          variant="h3"
         >
           {currentQuizName}
         </Typography>
